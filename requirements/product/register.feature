@@ -2,18 +2,18 @@ Feature: Register a new Product
   As the system, I want to persist a Product
 
   Scenario: Found a Unavailable Product
-    Given the system search for a "Product"
+    Given the system searches for a "Product"
     When receiving the "Product"
     And the "Product" is unavailable
     Then do nothing
 
-  Scenario: Don't found a Product
-    Given the system search for a "Product"
+  Scenario: Product not found
+    Given the system searches for a "Product"
     When receiving the "Product"
-    And don't found nothing
+    And finds nothing
     Then do nothing
 
   Scenario: Found a Product
-    Given the system search for a "Product"
+    Given the system searches for a "Product"
     When receiving the "Product"
     Then register it in database into the table "products"
