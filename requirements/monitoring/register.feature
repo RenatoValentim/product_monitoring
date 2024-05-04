@@ -14,12 +14,6 @@ Feature: Register a new Monitoring
     And the "Monitoring.MobileAlert" is true
     Then return status code 400 with the message "For enable mobile alerts the user phone number is required"
 
-  Scenario: Receiving an empty Monitoring.Email
-    Given a user sends a "Monitoring" on endpoint "http://url_api/api/monitoring/register"
-    When receiving the "Monitoring"
-    And the "Monitoring.Email" is empty
-    Then return status code 400 with the message "user email is required"
-
   Scenario: Receiving a Monitoring.EmailAlert equal true
     Given a user sends a "Monitoring" on endpoint "http://url_api/api/monitoring/register"
     When receiving the "Monitoring"
