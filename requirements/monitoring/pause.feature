@@ -4,4 +4,5 @@ Feature: Pause a Monitoring
   Scenario: Pausing a Monitoring
     Given a user pauses a "Monitoring"
     When receiving a valid "Monitoring"
+    And update it in database
     Then return status code 200
