@@ -13,7 +13,7 @@ Feature: Register a new user
     And the "User.Email" is empty
     Then return status code 400 with the message "The user email is required"
 
-  Scenario: Receiving a User
+  Scenario: Receiving a valid User
     Given a user sends a "User" to the endpoint "http://url_api/api/user/register"
     When receiving a valid "User"
     Then register it in the database in the "users" table
