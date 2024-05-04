@@ -10,7 +10,7 @@ Feature: Register a new Monitoring
   Scenario: Receiving a Monitoring.MobileAlert equal true
     Given a user sends a "Monitoring" on endpoint "http://url_api/api/monitoring/register"
     When receiving the "Monitoring"
-    And the column of the table "users.phone_number" is empty
+    And the column of the table "users.phone_number WHERE phone_number = ''"
     And the "Monitoring.MobileAlert" is true
     Then return status code 400 with the message "For enable mobile alerts the user phone number is required"
 
@@ -18,11 +18,12 @@ Feature: Register a new Monitoring
     Given a user sends a "Monitoring" on endpoint "http://url_api/api/monitoring/register"
     When receiving the "Monitoring"
     And the "Monitoring.EmailAlert" is true
-    Then register it in database into the table "monitoring" with the status "to monitoring"
+    Then register it in database into the table "monitoring.status = 'to monitoring'"
+    And "monitoring.alert = 'email'"
     And return status code 200
 
   Scenario: Receiving a minimum valid Monitoring
     Given a user sends a "Monitoring"
     When receiving a minimum valid "Monitoring"
-    Then register it in database into the table "monitoring" with the status "to monitoring"
+    Then register it in database into the table "monitoring" with the "monitoring.status = 'to monitoring'"
     And return status code 200
