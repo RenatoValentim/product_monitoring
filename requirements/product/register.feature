@@ -16,4 +16,5 @@ Feature: Register a new Product
   Scenario: Found a Product
     Given the system searches for a "Product"
     When receiving the "Product"
+    And set "products.alert_sent = false"
     Then register it in database into the table "products"
