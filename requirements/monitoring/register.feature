@@ -19,7 +19,7 @@ Feature: Register a new Monitoring
     When receiving the "Monitoring"
     And the "Monitoring.EmailAlert" is true
     Then register it in database into the table "monitoring.status = 'to monitoring'"
-    And "monitoring.alert = 'email'"
+    And "monitoring.alert_target = 'email'"
     And return status code 200
 
   Scenario: Receiving a minimum valid Monitoring
