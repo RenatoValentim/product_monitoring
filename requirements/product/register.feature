@@ -2,7 +2,8 @@ Feature: Register a new Product
   As the system, I want to persist a Product
 
   Scenario: Found a Unavailable Product
-    Given the system searches for a "Product"
+    Given the system receive a 'POST http://apiurl/api/products/sync {"event": "register"}'
+    And searches for a "Product" into the modules
     When receiving the "Product"
     And the "Product" is unavailable
     Then do nothing

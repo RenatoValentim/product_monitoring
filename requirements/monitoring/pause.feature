@@ -1,8 +1,8 @@
-Feature: Pause a Monitoring
-  As a user, I want to pause a Monitoring at any time.
+Feature: Pause Monitoring
+  As a user, I want to pause monitoring at any time.
 
-  Scenario: Pausing a Monitoring
+  Scenario: Pausing Monitoring
     Given a user pauses a "Monitoring"
     When receiving a valid "Monitoring"
-    And update it in "monitoring.status = 'paused'" database
+    And update its status to 'paused' in the database
     Then return status code 200

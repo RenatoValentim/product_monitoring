@@ -1,37 +1,28 @@
-Feature: Register a new Monitoring
-  As a user, I want to persist a Monitoring
+Feature: Register a New Monitoring
+  As a user, I want to persist a Monitoring.
 
-  Scenario: Receiving a Monitoring.Query greater than 250 characters
-    Given a user sends a "Monitoring" on endpoint "http://url_api/api/monitoring/register"
-    When receiving the "Monitoring"
-    And the length of the "Monitoring.Query" is greater than 250
+  Scenario: Receiving a Monitoring Query Greater than 250 characters
+    Given a user sends a request "http://{API_URL}/api/monitoring/register '{..."query": "1,2...500"...}'"
+    When receiving the "request.body"
+    And the length of the "request.body.query" is greater than 250
     Then return status code 400 with the message "The product description must be less than or equal to 250 characters."
 
-  Scenario: Receiving a Monitoring.MobileAlert equal true
-    Given a user sends a "Monitoring" on endpoint "http://url_api/api/monitoring/register"
-    When receiving the "Monitoring"
-    And the column of the table "users.phone_number WHERE phone_number = ''"
-    And the "Monitoring.MobileAlert" is true
-    Then return status code 400 with the message "For enable mobile alerts the user phone number is required."
+  Scenario: Receiving a Monitoring with MobileAlert Set to True
+    Given a user sends a request "http://{API_URL}/api/monitoring/register '{..."mobile_alert": true...}'"
+    When receiving the "request.body"
+    And the user's phone number is not provided on "database.table.users.phone_number"
+    Then return status code 400 with the message "To enable mobile alerts, the user's phone number is required."
 
-  Scenario: Receiving a Monitoring.EmailAlert equal true
-    Given a user sends a "Monitoring" on endpoint "http://url_api/api/monitoring/register"
-    When receiving the "Monitoring"
-    And the "Monitoring.EmailAlert" is true
-    Then register it in database into the table "monitoring.status = 'to monitoring'"
-    And "monitoring.alert_target = 'email'"
+  Scenario: Receiving a Monitoring with EmailAlert Set to True
+    Given a user sends a request "http://{API_URL}/api/monitoring/register '{..."email_alert": true...}'"
+    When receiving the "request.body"
+    Then register it in the database with "database.table.monitoring.status = 'to monitoring'"
+    And "database.table.monitoring.alert_target = 'email'"
     And return status code 200
 
-  Scenario: Receiving a minimum valid Monitoring
+  Scenario: Receiving a Minimum Valid Monitoring
     Given a user sends a "Monitoring"
     When receiving a minimum valid "Monitoring"
-    And the "Product" is unavailable
-    Or the "Product" not found
-    Then do nothing
-    And return status code 200 with the message "Product not found, try again late."
-
-  Scenario: Receiving a minimum valid Monitoring
-    Given a user sends a "Monitoring"
-    When receiving a minimum valid "Monitoring"
-    Then register it in database into the table "monitoring" with the "monitoring.status = 'to monitoring'"
+    Then register it in the database with "monitoring.status = 'to monitoring'"
     And return status code 200
+
